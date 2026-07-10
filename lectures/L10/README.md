@@ -3,15 +3,21 @@
 ## Dagordning
 * Genomförande av övningstentamen inför kommande praktiska prov.
 
+---
+
 ## Mål med lektionen
 * Visa praktisk förståelse för feedforward, backpropagation samt optimering i dense-lager.
 * Visa förståelse för aktiveringsfunktioner och val av dessa.
 * Kunna träna ett litet neuralt nätverk för hand.
 * Identifiera eventuella kunskapsluckor inför det skarpa provet.
 
+---
+
 ## Förutsättningar
 * God kunskap i C++ (klasser, referenser, vektorer).
 * Förståelse för teorin bakom neurala nätverk (L05) samt dess implementation i kod (L06-L09).
+
+---
 
 ## Instruktioner
 

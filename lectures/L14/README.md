@@ -4,8 +4,12 @@
 * Implementation av conv-lager i mjukvara.
 * Fortsatt arbete med **P03**.
 
+---
+
 ## Mål med lektionen
 * Kunna implementera enkla conv-lager i mjukvara.
+
+---
 
 ## Instruktioner
 * Öppna filen [conv_demo.cpp](./conv_layer/cpp/conv_demo.cpp). En strukt döpt `ml::ConvLayer` ska läggas till i denna
@@ -21,9 +25,13 @@ Testkör programmet via kommandot `python3 conv_demo.py` i terminalen i motsvara
     * Struktens medlemsvariabler hålls därmed privata, på samma sätt som nyckelordet `private` används i C++. 
     * Här demonstreras även hur matriser kan implementeras i C via strukten [matrix_t](./conv_layer/c/include/ml/matrix.h).
 
+---
+
 ## Utvärdering
 * Vilka delar av er `ml::ConvLayer`-implementation motsvarar feedforward respektive backpropagation?
 * Varför använder vi samma kernel (samma vikter) över hela bilden i stället för unika vikter per position?
+
+---
 
 ## Nästa lektion
 * Implementation av maxpooling-lager i mjukvara.

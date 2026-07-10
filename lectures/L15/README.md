@@ -4,8 +4,12 @@
 * Implementation av maxpooling-lager i mjukvara.
 * Fortsatt arbete med **P03**.
 
+---
+
 ## Mål med lektionen
 * Kunna implementera enkla maxpooling-lager i mjukvara.
+
+---
 
 ## Instruktioner
 * Öppna filen [max_pool_demo.cpp](./max_pool_layer/cpp/max_pool_demo.cpp). 
@@ -21,9 +25,15 @@ Testkör programmet via kommandot `python3 max_pool_demo.py` i terminalen i mots
     * Struktens medlemsvariabler hålls därmed privata, på samma sätt som nyckelordet `private` används i C++. 
     * Här demonstreras även hur matriser kan implementeras i C via strukten [matrix_t](./max_pool_layer/c/include/ml/matrix.h).
 
+---
+
 ## Utvärdering
 * Hur vet er `ml::MaxPoolLayer`-implementation vilka positioner gradienterna ska spridas tillbaka till vid backpropagation?
 * Vilka skillnader finns mellan ett maxpooling-lager och ett dense- eller conv-lager, sett till exempelvis parametrar och beräkningar?
 
+---
+
 ## Nästa lektion
 * Implementation av flatten-lager i mjukvara.
+
+---

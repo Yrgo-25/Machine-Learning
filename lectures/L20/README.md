@@ -4,13 +4,19 @@
 * Genomförande av övningstentamen inför kommande praktiska prov.
 * Kursavslut.
 
+---
+
 ## Mål med lektionen
 * Visa praktisk förståelse för konvolutionella neurala nätverk (kernels, padding, pooling-lager
   med mera).
 * Identifiera eventuella kunskapsluckor inför det skarpa provet.
 
+---
+
 ## Förutsättningar
 * Förståelse för konvolutionella neurala nätverk (**L12-L16**).
+
+---
 
 ## Instruktioner
 
@@ -35,8 +41,9 @@ Mjuk- och hårdvarutestning och genomförs i stället under L20 i den kursen.
     * Något som var anmärkningsvärt bra/mindre bra?
     * Är det något ni hade velat ha mer eller mindre av?
 
+---
+
 ## Nästa lektion
 * Inga fler lektioner, tack för denna kurs!
 
 ---
-

@@ -6,6 +6,8 @@ En strukt döpt `ml::MaxPoolLayer` ska läggas till i
 maxpooling-lager. För att hålla det så enkelt som möjligt implementerar vi en strukt och slopar
 get- och set-metoder, radering av copy- och move-konstruktorer med mera.
 
+![](./images/maxpool_layer.png)
+
 Studera koden i funktionen `main()`. Er implementation ska skrivas så att denna kod fungerar för att
 skapa och använda ett maxpooling-lager döpt `poolLayer`:
 

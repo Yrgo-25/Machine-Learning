@@ -3,6 +3,8 @@ Denna bilaga sammanfattar hur ekvationerna för feedforward, backpropagation sam
 **L05** (se [bilaga A](../../L05/appendix/a_neural_networks.md)) motsvaras av koden ni skriver i 
 `Dense` (se [bilaga B](./b_exercises.md) för den fullständiga instruktionen).
 
+![](./images/dense_layer2.png)
+
 ---
 
 ## Feedforward
@@ -19,7 +21,7 @@ $$s = b + \sum_{i=0}^{j} w_i * x_i, \quad y = \delta(s)$$
 
 `myPreActivationOutput[i]` behövs vid backpropagation nedan, eftersom aktiveringsfunktionens
 derivata $y_p'$ ska beräknas utifrån $s$ (den viktade summan innan aktiveringsfunktionen
-applicerades) - inte utifrån $y$ (utdatan efter aktiveringsfunktionen).
+applicerades); inte utifrån $y$ (utdatan efter aktiveringsfunktionen).
 
 ---
 

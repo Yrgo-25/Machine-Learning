@@ -1,9 +1,11 @@
 # Arkitektur – Interface och klasser
 
 ## Översikt
-Ni ska implementera ett enkelt neuralt nätverk steg för steg.
+Ni ska implementera ett enkelt neuralt nätverk steg för steg enligt nedanstående figur:
 
-Det ni ska implementera ser ut såhär:
+![](./images/ann_arch1.png)
+
+Det ni ska implementera har följande struktur:
 
 ```
 ml::dense_layer::Interface   (Interface för dense-lager)
@@ -15,8 +17,7 @@ ml::neural_network::Interface   (Interface för neurala nätverk)
         └── ml::dense_layer::Interface& myOutputLayer
 ```
 
-Under dessa lektioner används `ml::dense_layer::Stub` som placeholder. När en skarp implementation 
-skapas i **L08–L09** ersätts stubben utan att resten av koden behöver ändras.
+Under dessa lektioner används `ml::dense_layer::Stub` som placeholder. När en skarp implementation skapas i **L08–L09** ersätts stubben utan att resten av koden behöver ändras.
 
 ---
 

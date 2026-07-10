@@ -18,6 +18,10 @@ kompletta träningsprocessen, upprepat för varje träningsuppsättning och epok
 
 ## Träningsloopens struktur
 
+![](./images/ann_arch2.png)
+
+Träningsloopen kan summeras enligt nedan:
+
 ```
 För varje epok:
     För varje träningsuppsättning x:

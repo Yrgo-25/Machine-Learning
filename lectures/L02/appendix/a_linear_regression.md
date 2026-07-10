@@ -7,6 +7,10 @@ Nedan visas en minimalistisk implementation av linjär regression i C++ med en s
 
 **OBS!** Ett alias `Matrix1d` används som substitut för `std::vector<double>`.
 
+![](./images/linreg_cpp1.png)
+
+Nedan visas den fullständiga implementationen:
+
 ```cpp
 /**
  * @brief Minimalistic linear regression example.

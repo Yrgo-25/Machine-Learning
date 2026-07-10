@@ -91,6 +91,12 @@ Genomför sedan prediktion för indata bestående av alla heltal inom intervalle
 ---
 
 ### Lösning
+Nedanstående figur demonstrerar träningsförloppet:
+
+![](./images/linear_regression.png)
+
+Nedan redovisas samtliga uträkningar.
+
 Vi genomför träning för varje träningsuppsättning en efter en.
 
 #### Träningsuppsättning 1

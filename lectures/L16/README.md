@@ -4,8 +4,12 @@
 * Implementation av flatten-lager i mjukvara.
 * Fortsatt arbete med **P03**.
 
+---
+
 ## Mål med lektionen
 * Kunna implementera enkla flatten-lager i mjukvara.
+
+---
 
 ## Instruktioner
 * Öppna filen [flatten_demo.cpp](./flatten_layer/cpp/flatten_demo.cpp). 
@@ -21,9 +25,15 @@ Testkör programmet via kommandot `python3 flatten_demo.py` i terminalen i motsv
     * Struktens medlemsvariabler hålls därmed privata, på samma sätt som nyckelordet `private` används i C++. 
     * Här demonstreras även hur matriser kan implementeras i C via strukten [matrix_t](./flatten_layer/c/include/ml/matrix.h).
 
+---
+
 ## Utvärdering
 * Varför behövs ett flatten-lager mellan de konvolutionella/pooling-lagren och dense-lagret?
 * Vad gör flatten-lagrets `backpropagate()`, och hur skiljer sig den beräkningen från `feedforward()`?
 
+---
+
 ## Nästa lektion
 * Arbete med **P03**.
+
+---

@@ -6,13 +6,15 @@ En strukt döpt `ml::FlattenLayer` ska läggas till i
 För att hålla det så enkelt som möjligt implementerar vi en strukt och slopar get- och set-metoder,
 radering av copy- och move-konstruktorer med mera.
 
+![](./images/flatten_layer.png)
+
 Studera koden i funktionen `main()`. Er implementation ska skrivas så att denna kod fungerar för att
 skapa och använda ett flatten-lager döpt `flattenLayer`:
 
 ```cpp
 // Create a flatten layer: 4x4 input, produces 1x16 output.
 constexpr std::size_t inputSize{4U};
-FlattenLayer flattenLayer{inputSize};
+ml::FlattenLayer flattenLayer{inputSize};
 
 // Example 4x4 input matrix (could represent an image or feature map).
 const Matrix2d input{{2, 1, 6, 1},

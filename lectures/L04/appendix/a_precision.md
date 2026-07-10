@@ -5,6 +5,10 @@ Precisionen beräknas som `1.0 - MAE`, där MAE (*mean absolute error*) är det 
 
 Nedan visas en utökning av regressionsstrukturen från L03 med precisionsberäkning. Den privata metoden `computePrecision()` beräknar precisionen, och `train()` avslutar träningen tidigt om precisionen överstiger ett givet tröskelvärde.
 
+![](./images/linreg_cpp3.png)
+
+Nedan visas den fullständiga implementationen:
+
 ```cpp
 /**
  * @brief Linear regression with precision calculation.

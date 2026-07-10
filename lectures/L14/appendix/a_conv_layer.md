@@ -3,6 +3,8 @@
 ### Uppgiftsbeskrivning
 En strukt döpt `ml::ConvLayer` ska läggas till i [conv_demo.cpp](../conv_layer/cpp/conv_demo.cpp) för att realisera enkla conv-lager. För att hålla det så enkelt som möjligt implementerar vi en strukt och slopar get- och set-metoder, radering av copy- och move-konstruktorer med mera.
 
+![](./images/conv_layer.png)
+
 Studera koden i funktionen `main()`. Er implementation ska skrivas så att denna kod fungerar:
 
 ```cpp

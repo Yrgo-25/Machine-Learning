@@ -1,5 +1,7 @@
 # Bilaga B - Konvolutionella neurala nätverk (CNN)
 
+![](./images/cnn_overview.png)
+
 ### Översikt
 Ett typiskt CNN består av fyra typer av lager:
 1. **Konvolutionella lager** (hädanefter *conv-lager*) identifierar och extraherar lokala mönster

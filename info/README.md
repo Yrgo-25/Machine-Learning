@@ -41,7 +41,8 @@ Erik Pihl ([erik.axel.pihl@gmail.com](mailto:erik.axel.pihl@gmail.com))
 * Två praktiska prov.
 
 ### Poängfördelning
-* **P03** ger upp till 4 poäng (**G** = 2p, **VG** = 4p).
+* **P03** ger upp till 4 poäng per student (**G** = 2p, **VG** = 4p), satta individuellt enligt
+  kriterierna i [projektbeskrivningen](../projects/P03/README.md#bedömning).
 * **Praktiskt prov 1** ger upp till 2 poäng (**G** = 1p, **VG** = 2p). Provet är gemensamt med
   kursen Mjuk- och hårdvarutestning och genomförs under **L10 i den kursen**, eftersom den
   lektionen infaller en vecka senare än denna kurss L10.

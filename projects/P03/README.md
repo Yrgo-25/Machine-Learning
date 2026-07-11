@@ -19,6 +19,10 @@ Projektet genomförs i två faser:
 
 Fas 1 påbörjas under L03, direkt efter att linjär regression introducerats i L01–L02. Vid behov kan arbetet med Fas 1 fortsätta in i L05–L10, under avsatt lektionstid och eget arbete. Fas 2 påbörjas när neurala nätverk har gåtts igenom, tidigast efter L05 och senast efter L10.
 
+Kraven i Fas 1 och Fas 2 nedan beskriver vad gruppens gemensamma kodbas ska innehålla. Det är
+alltså ett gemensamt golv som gör att var och en av er har något konkret att bidra till och visa
+upp – själva betyget sätts däremot individuellt, se [Bedömning](#bedömning).
+
 ---
 
 ## Fas 1 – Adaptiv linjär regressionsmodell
@@ -104,40 +108,55 @@ Ni får **inte** använda AI för att skriva själva ML-implementationen (algori
 
 ---
 
-## Gruppindelning och individuell bedömning
+## Gruppindelning
 * Samma grupper som i **P02**.
-* Projektet genomförs i grupp.
+* Kodbasen byggs gemensamt i grupp, men betyget sätts individuellt (se
+  [Bedömning](#bedömning)).
 
 ### Bidragsrapport (obligatorisk)
 Ni lämnar in en gemensam bidragsrapport i filen `p01_rapport.md` där ni övergripande beskriver vem som gjorde vad, vilken algoritm och uppgift ni valde till Fas 2, samt var AI-verktyg har använts. Utvärderingsfrågorna besvaras i samma fil (se [Utvärdering](#utvärdering)).
 
-### Bedömning
-* Projektets funktion och design bedöms på gruppnivå.
-* Individuellt betyg baseras på bidragsrapporten, Git-aktivitet och förmågan att förklara kod och designbeslut vid redovisning.
+---
 
-**OBS!** En student som inte kan visa tillräckligt eget bidrag riskerar att inte bli godkänd, även om gruppens projekt uppfyller kraven.
+## Bedömning
+Betyget sätts **individuellt, inte på gruppnivå**. Gruppens gemensamma kodbas (se Fas 1 och Fas 2
+ovan) är underlaget som gör bedömningen möjlig, men det som avgör ditt betyg är vad *du*
+personligen har bidragit med och kan redogöra för – bedömt utifrån Git-historik, bidragsrapporten
+och din förmåga att förklara dina egna tester, din kod och dina designbeslut vid redovisning.
+
+**OBS!** En student som inte kan visa tillräckligt eget bidrag riskerar att inte bli godkänd, även
+om gruppens gemensamma kodbas uppfyller kraven.
 
 **OBS!** Samtliga gruppmedlemmar förväntas ha grundläggande förståelse för den nya koden i sin helhet — även för delar man inte själv skrivit.
 
----
+### G (individuellt)
+* Git-historiken visar att du personligen har skrivit fungerande kod för minst en del av den
+  obligatoriska omfattningen (Fas 1 och/eller Fas 2).
+* Du kan förklara din egen kod: vilket problem den löser, hur den är uppbyggd och varför den är
+  utformad som den är.
+* Du kan redogöra för dina egna enhetstester: vad de verifierar och varför de är utformade som de
+  är.
+* Gruppens gemensamma kodbas uppfyller kraven för Fas 1 och Fas 2 ovan – annars finns inget
+  konkret för dig att visa upp och förklara.
 
-## Bedömningskriterier (G)
-* Klassen `ml::lin_reg::Adaptive` är implementerad och fungerar korrekt.
-* Klassen `driver::tempsensor::Smart` är implementerad och använder `Adaptive` internt.
-* `Tmp36` är ersatt med `Smart` i systemlogiken utan att systemets yttre beteende förändras.
-* Systemet uppfyller det funktionella beteendet för Fas 1 ovan.
-* Vald ML-algoritm i Fas 2 är implementerad för hand och löser den egenvalda uppgiften på ett rimligt sätt.
-* Både Fas 1 och Fas 2 har enhetstester som täcker centrala delar av implementationen.
-* Koden följer befintlig kodstil och är väl dokumenterad.
-* Det framgår tydligt var AI-verktyg har använts, i enlighet med [Användning av AI-verktyg](#användning-av-ai-verktyg).
+### VG (individuellt)
+Utöver G-kraven ska du med stor skicklighet och hög precision kunna visa eget bidrag som svarar
+mot kursens VG-inriktning för momentet:
+* **Korrekt implementerad ML-algoritm:** du har själv, för hand, implementerat en ML-algoritm
+  (Fas 1 och/eller Fas 2) där beräkningarna är verifierat korrekta, t.ex. mot framräknade exempel
+  eller genom egna enhetstester – inte bara kod som "ser ut att fungera" vid en snabb demo.
+* **Motiverade design- och verktygsval:** du kan självständigt motivera dina egna designval (t.ex.
+  varför ett interface eller en klassindelning ser ut som den gör) samt var och varför AI-verktyg
+  har använts respektive medvetet inte använts i din del av arbetet.
 
 ---
 
 ## Redovisning
 Projektet redovisas för lärare under lektionstid:
-* Demo i hårdvara på ESP32-S3 av Fas 1.
-* Demo av Fas 2, på målhårdvara eller värddator beroende på uppgiftens natur.
-* Ni ska kunna förklara er implementation och designbeslut, samt visa och gå igenom era enhetstester.
+* Gemensam demo i hårdvara på ESP32-S3 av Fas 1.
+* Gemensam demo av Fas 2, på målhårdvara eller värddator beroende på uppgiftens natur.
+* Var och en av er ska individuellt kunna förklara sin egen del av implementationen och sina egna
+  designbeslut, samt visa och gå igenom sina egna enhetstester – se [Bedömning](#bedömning).
 
 ---
 

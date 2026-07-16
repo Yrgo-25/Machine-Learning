@@ -1,25 +1,33 @@
 # L13 - Konvolutionella neurala nätverk (del II)
 
 ## Dagordning
-* Träning av ett konvolutionellt neuralt nätverk för hand (45–60 minuter).
+* Genomgång av ett komplett CNN i kod (`cnn_demo`): arkitektur och hur lagren hänger ihop.
+* Översiktlig genomgång av träning för hand (bilaga A).
 * Fortsatt arbete med **P03**.
 
 ---
 
 ## Mål med lektionen
-* Kunna träna enkla konvolutionella neurala nätverk för hand.
+* Kunna beskriva hur ett komplett CNN är uppbyggt i kod: hur conv-, maxpool-, flatten- och dense-lager hänger ihop från indata till prediktion.
+* Ha en översiktlig förståelse för hur ett litet konvolutionellt neuralt nätverk tränas för hand.
 
 ---
 
 ## Instruktioner
-* Se [bilaga A](./appendix/a_cnn_by_hand.md) för ett räkneexempel på träning av ett konvolutionellt
-neuralt nätverk.
+
+### Innan lektionen
+* Läs igenom [bilaga A](./appendix/a_cnn_by_hand.md) för en översiktlig genomgång av hur ett litet konvolutionellt neuralt nätverk tränas för hand.
+
+### Under lektionen
+* Delta aktivt på genomgången av [cnn_demo](./cnn_demo), ett komplett CNN (conv → maxpool → flatten → dense) som klassificerar 4×4-pixelbilder av siffrorna 0–3.
+    * Bygg och kör med `make` i katalogen.
 
 ---
 
 ## Utvärdering
 * Kan ni, utan att titta i bilagan, beskriva hur en kernel appliceras över en bild vid feedforward i ett conv-lager?
-* Varför sprids gradienter vid backpropagation genom ett maxpooling-lager endast till de positioner som hade maxvärdet vid feedforward?
+* I `cnn_demo`, hur hänger conv-, maxpool-, flatten- och dense-lagren ihop för att gå från indata till prediktion?
+* Varför använder demo-CNN:ets dense-lager one-hot-kodning (en nod per siffra) i utdatan i stället för en enda utgångsnod?
 
 ---
 

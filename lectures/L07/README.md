@@ -25,7 +25,7 @@
 
 ## Utvärdering
 * Kan ni förklara flödet från indata till prediktion i er implementation, steg för steg?
-* Vad returnerar `feedforward()`, och varför är returvärdet viktigt för nätverkets övriga delar?
+* Varför har `feedforward()` inget returvärde (`void`), och hur läser nätverkets övriga delar av resultatet istället?
 
 ---
 

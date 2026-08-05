@@ -1,25 +1,24 @@
-# Ignore everything without an extension.
+# Ignore everything without an extension, then selectively allow files and directories.
 *
 !*.*
 !*/
 
-# Don't ignore makefiles.
+# Don't ignore makefiles and license files.
 !makefile
 !Makefile
-
-# Don't ignore license files.
 !LICENSE
 
-# Ignore .txt files.
+# Ignore build artifacts.
+*.o
+*.a
+
+# Ignore text files, except the Python requirements.
 *.txt
 !requirements.txt
 
-# Ignore claude directory.
-*.claude/
-
 # Ignore Python cache.
-*__pycache__/
+__pycache__/
 
-# Ignore vscode directory.
-*vscode/
-*vs/
+# Ignore IDE directories.
+.vscode/
+.vs/

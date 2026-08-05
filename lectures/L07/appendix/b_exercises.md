@@ -7,7 +7,8 @@ Ni ska färdigställa klassen `ml::neural_network::Shallow` från **L06** genom 
 Ersätt den tillfälliga versionen av `train()` i `source/neural_network/shallow.cpp` med en fullständig implementation:
 
 **Indatakontroll:**
-* Skriv ut ett felmeddelande och anropa `std::terminate()` (från `<exception>`) om `myTrainSetCount == 0`, `epochCount == 0` eller `learningRate <= 0.0 || learningRate >= 1.0`.
+* Returnera `false` om `myTrainSetCount == 0`, `epochCount == 0` eller `learningRate <= 0.0 || learningRate >= 1.0`.
+* Som i **L02** och **L04** rapporterar `train()` ogiltiga argument via sitt returvärde. Endast en konstruktor anropar `std::terminate()`, eftersom den inte kan returnera någon felkod till anroparen.
 
 **Träning:**
 * Iterera önskat antal epoker med en for-loop: `for (std::size_t epoch{}; epoch < epochCount; ++epoch)`.
@@ -21,7 +22,9 @@ Ersätt den tillfälliga versionen av `train()` i `source/neural_network/shallow
         * Optimera det dolda lagret: `myHiddenLayer.optimize(myTrainInput[x], learningRate)`.
         * Optimera utgångslagret utifrån det dolda lagrets output: `myOutputLayer.optimize(myHiddenLayer.output(), learningRate)`.
 
-**Returvärde:** `true` efter genomförd träning.
+Var och en av de fyra lageranropen ovan returnerar `bool` (se **L06**). Returnera `false` så snart något av dem misslyckas: en dimensionsmiss betyder att nätverket är felkopplat, och att fortsätta träna därifrån ger bara meningslösa siffror.
+
+**Returvärde:** `false` vid ogiltiga argument eller ett misslyckat lageranrop, annars `true` efter genomförd träning.
 
 ---
 

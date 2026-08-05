@@ -84,7 +84,7 @@ Klassen ska inneha följande publika metoder:
     * Tränar modellen med ingående argument:
         * `epochCount`: Antal epoker att träna (osignerat heltal).
         * `learningRate`: Lärhastighet som flyttal. Defaultvärde: `0.01` (1 %).
-    * Returnerar `true` efter genomförd träning.
+    * Returnerar `false` om `epochCount` är 0, eller om `learningRate` ligger utanför intervallet `(0.0, 1.0)`. Annars returneras `true` efter genomförd träning.
     * Ska markeras `noexcept`.
 
 Klassen ska inneha följande privata metoder:
@@ -119,13 +119,20 @@ Lägg till följande privata medlemsvariabler i `Fixed`:
 * **`myWeight`:** 
     * Modellens viktvärde (k-värdet i `y = kx + m`).
     * Ska vara av flyttalstyp.
+* **`mySetCount`:** 
+    * Antalet fullständiga träningsuppsättningar, dvs. `std::min(trainInput.size(), trainOutput.size())` (`std::min` finns i `<algorithm>`).
+    * Träningsdata som innehåller fler indata än utdata, eller tvärtom, har inga fullständiga uppsättningar bortom den kortaste av de två vektorerna, så överskottsvärdena är oanvändbara.
+    * Initieras i konstruktorn.
+    * Ska vara ett osignerat heltal (`std::size_t`, från `<cstddef>`) och markeras `const`.
 
 ---
 
 ### 9. Konstruktor
 Implementera konstruktorn i `source/ml/lin_reg/fixed.cpp`:
 * Initiera alla medlemsvariabler. 
-* `myBias` och `myWeight` kan sättas till `0.5`.
+* Sätt `mySetCount` till antalet fullständiga träningsuppsättningar, dvs. det minsta av de två vektorernas storlekar.
+* `myBias` och `myWeight` ska båda initieras till `0.0`, så att modellen predikterar `0` för varje indata tills den har tränats.
+* Skriv ut ett felmeddelande till `stderr` och anropa `std::terminate()` (från `<exception>`) om `mySetCount` är 0. En modell utan träningsdata kan aldrig tränas, och eftersom konstruktorn inte kan returnera någon felkod finns det inget sätt att rapportera problemet till anroparen.
 
 ---
 
@@ -146,21 +153,26 @@ där:
 
 ### 11. Träning
 Implementera metoden `train()` i `source/ml/lin_reg/fixed.cpp`:
-* Skriv ut ett felmeddelande och anropa `std::terminate()` (från `<exception>`) om träningsuppsättningar saknas, `epochCount == 0` eller learningRate är utanför intervallet `(0.0, 1.0)`.
+* Returnera `false` direkt om `epochCount` är 0, eller om `learningRate` ligger utanför intervallet `(0.0, 1.0)`:
+    * En lärhastighet på `0.0` eller mindre kan aldrig förbättra modellen.
+    * En lärhastighet på `1.0` eller mer korrigerar med minst hela felet i varje steg, vilket får träningen att oscillera eller divergera i stället för att konvergera.
+* Till skillnad från konstruktorn kan `train()` rapportera ogiltiga argument via sitt returvärde, så här anropas inte `std::terminate()`.
+* Avsaknad av träningsdata hanteras redan av konstruktorn, så `train()` behöver inte kontrollera det.
 * Träna modellen givet antal epoker.
-* Under varje epok, iterera genom alla träningsuppsättningar. Genomför optimering genom att anropa metoden `optimize()` med aktuell träningsuppsättning (erhålls från vektorerna, förslagsvis via index).
+* Under varje epok, iterera genom alla `mySetCount` träningsuppsättningar. Genomför optimering genom att anropa metoden `optimize()` med aktuell träningsuppsättning (erhålls från vektorerna, förslagsvis via index).
 * Returnera `true` efter genomförd träning.
 
 ---
 
 ### 12. Optimering
 Implementera metoden `optimize()` i `source/ml/lin_reg/fixed.cpp`:
-* Beräkna en prediktion med given indata: `prediction = myWeight * input + myBias`.
-* Beräkna felet som differensen mellan referensvärdet och prediktionen: `error = output - prediction`.
-* Om `input == 0`: sätt `myBias = output` direkt och hoppa över övriga uppdateringar, eftersom `y = m` då `x = 0`.
-* Annars, justera modellens parametrar utefter felet:
-    * `myBias   = myBias   + error * learningRate`
-    * `myWeight = myWeight + error * learningRate * input`
+* Om `input == 0`: sätt `myBias = output` direkt och returnera, utan att röra `myWeight`. Eftersom `y = k * 0 + m = m` *är* referensvärdet biasvärdet, och inget värde på `k` påverkar en prediktion gjord med indatan noll.
+* Annars:
+    * Beräkna en prediktion med given indata: `prediction = myWeight * input + myBias`.
+    * Beräkna felet som differensen mellan referensvärdet och prediktionen: `error = output - prediction`.
+    * Justera modellens parametrar utefter felet:
+        * `myBias   = myBias   + error * learningRate`
+        * `myWeight = myWeight + error * learningRate * input`
 
 ---
 

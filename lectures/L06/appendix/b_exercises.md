@@ -50,39 +50,108 @@ Getters, samtliga `const`, `noexcept` samt `[[nodiscard]]`:
 | `error()` | Referens till lagrets fel (skrivskyddad flyttalsvektor). |
 | `weights()` | Referens till lagrets vikter (skrivskyddad, tvådimensionell flyttalsvektor). |
 
-Beräkningsmetoder, samtliga `noexcept` och utan returvärde (`void`). Vid ogiltig indata (felaktig 
-dimension eller ogiltig lärhastighet) ska ett felmeddelande skrivas ut och `std::terminate()` 
-anropas:
-
-* **`feedforward(input)`:** Genomför feedforward. `input`: skrivskyddad flyttalsvektor med indata.
-* **`backpropagate(output)`** (utgångslager): Beräknar fel utifrån referensvärden. `output`: 
-  skrivskyddad flyttalsvektor med referensvärden.
-* **`backpropagate(nextLayer)`** (dolt lager): Beräknar fel utifrån nästa lager. `nextLayer`: 
-  referens till nästa lager (`const Interface&`).
-* **`optimize(input, learningRate)`:** Uppdaterar bias och vikter. `input`: skrivskyddad 
-  flyttalsvektor. `learningRate`: flyttal.
+Beräkningsmetoder, samtliga `noexcept` och med returtypen `bool`. Var och en returnerar `false` 
+vid ogiltig indata (felaktig dimension eller ogiltig lärhastighet) och `true` annars, så att 
+anroparen själv kan avgöra vad som ska göras åt felet. Som i **L02** och **L04** är 
+`std::terminate()` reserverad för konstruktorn, som inte kan returnera någon felkod till 
+anroparen:
+* **`feedforward(input)`:** Genomför feedforward.
+    * `input`: skrivskyddad flyttalsvektor med indata.
+* **`backpropagate(output)`** (utgångslager): Beräknar fel utifrån referensvärden.
+    * `output`: skrivskyddad flyttalsvektor med referensvärden.
+* **`backpropagate(nextLayer)`** (dolt lager): Beräknar fel utifrån nästa lager.
+    * `nextLayer`: referens till nästa lager (`const Interface&`).
+* **`optimize(input, learningRate)`:** Uppdaterar bias och vikter.
+    * `input`: skrivskyddad flyttalsvektor.
+    * `learningRate`: flyttal.
 
 **Stubbklassen (`ml/dense_layer/stub.h`):**
 I namnrymden `ml::dense_layer`, implementera en underklass döpt `Stub` som ärver `Interface` via 
-publikt arv. Klassen ska markeras `final`. Stubben genomför ingen riktig beräkning - den finns 
-enbart för att det neurala nätverket ska gå att kompilera och testköra innan en skarp 
-`Dense`-implementation finns (se **L08–L09**).
+publikt arv. Klassen ska markeras `final`. Stubben genomför ingen riktig beräkning; den finns 
+enbart för att annan kod ska gå att kompilera, testköra och enhetstesta mot ett riktigt 
+`dense_layer::Interface` innan en skarp `Dense`-implementation finns (se **L08–L09**). Nätverket 
+ni bygger i avsnitt 4 nedan testas i sin helhet mot denna stubb, så det är värt att få den rätt.
 
-* **`Stub()`:** Tar emot `nodeCount` samt `weightCount` (osignerade heltal). Initierar 
-  utdatavektorn till ett fast värde (t.ex. `0.5`), övriga vektorer (fel, bias, vikter) till 
-  nollor. Ska markeras `explicit` samt `noexcept`.
-* **`~Stub()`:** Ska markeras `default`, `noexcept` samt `override`.
-* Övriga getters: Ska markeras `override` (behåller interfacets `const` och `noexcept`, men 
-  **inte** `[[nodiscard]]`).
-* **`feedforward()`**, båda varianterna av **`backpropagate()`** samt **`optimize()`**: Gör endast 
-  range-checkar och anropar `std::terminate()` vid mismatch. Ska markeras `override` samt 
-  `noexcept`.
+* **`Stub()`:**
+    * Klassens enda implementerade konstruktor.
+    * Ska ha följande ingående argument:
+        * `nodeCount`: antal noder i lagret (osignerat heltal).
+        * `weightCount`: antal vikter per nod (osignerat heltal).
+        * `outputValue`: värdet som varje element i utdatavektorn sätts till (flyttal). 
+          Defaultvärde: `0.5`.
+    * Initierar varje element i utdatavektorn till `outputValue`, samt fel- och viktvektorerna 
+      till nollor.
+    * Ska skriva ut ett felmeddelande och anropa `std::terminate()` om `nodeCount` eller 
+      `weightCount` är 0:
+        * Som i **L02** och **L04** är konstruktorn den enda plats som avslutar programmet, 
+          eftersom den inte kan returnera någon felkod.
+        * Det garanterar också minst en nod och en vikt, vilket är det som gör det säkert för 
+          `weightCount()` att läsa bredden på viktmatrisens första rad.
+    * `outputValue` är ett argument i stället för en hårdkodad konstant för att två stubbar ska 
+      gå att skilja åt. Ett nätverk vars samtliga lager rapporterar samma utdata kan inte visa 
+      om en prediktion kom från utgångslagret eller från det dolda lagret; ger man varje lager 
+      sitt eget värde blir det synligt.
+    * Ska markeras `explicit` samt `noexcept`.
+* **`~Stub()`:**
+    * Destruktor som överlagrar interfacets destruktor.
+    * Ska markeras `default`, `noexcept` samt `override`.
+* **Getters** (`nodeCount()`, `weightCount()`, `output()`, `error()`, `weights()`):
+    * Överlagrar motsvarande metoder i interfacet.
+    * Ska markeras `override` (behåller interfacets `const` och `noexcept`, men **inte** 
+      `[[nodiscard]]`).
+* **`feedforward()`**, båda varianterna av **`backpropagate()`** samt **`optimize()`**:
+    * Genomför endast range-checkar:
+        * Returnera `false` när dimensionerna inte stämmer, eller, för `optimize()`, när 
+          lärhastigheten ligger utanför `(0.0, 1.0)`.
+        * Returnera `true` annars.
+    * Beräknar avsiktligt ingenting:
+        * Utdatan förblir `outputValue` oavsett vad som matas in.
+        * Felet förblir noll.
+    * Ska markeras `override` samt `noexcept`.
+* **`setOutput()`:**
+    * Sätter varje element i utdatavektorn till det angivna värdet.
+    * Ska ha ett enda ingående argument:
+        * `outputValue`: värdet som varje element i utdatavektorn ska sättas till (flyttal).
+    * Returnerar ingenting, och ska markeras `noexcept`.
+    * Ingår **inte** i `Interface`. Den finns enbart på stubben.
+    * Det är denna metod som gör det möjligt att styra utdatan för ett helt nätverk i ett test:
+        * Nätverket lagrar sina lager som referenser, så ett anrop till `setOutput()` på det 
+          lager nätverket byggdes med ändrar vad nätverket predikterar.
+        * Det avslöjar om nätverket läser sitt utgångslager direkt eller har sparat en egen 
+          kopia av utdatan. Just den kopian är vad noteringen i avsnitt 7 nedan är till för att 
+          förhindra.
+* **`feedforwardCount()`** samt **`clearFeedforwardCount()`:**
+    * `feedforwardCount()` returnerar antalet gånger `feedforward()` har anropats på detta 
+      lager, och räknar **varje** anrop, inte bara de som klarade range-checken:
+        * Öka räknaren (`myFeedforwardCount`) allra först i `feedforward()`, innan indatans 
+          storlek kontrolleras, så att ett avvisat anrop höjer den precis som ett godkänt.
+        * Räknaren mäter hur ofta lagret *ombads* göra feedforward, inte hur ofta det gick med 
+          på det.
+        * Ska markeras `[[nodiscard]]`, `const` samt `noexcept`.
+    * `clearFeedforwardCount()` nollställer räknaren.
+        * Returnerar ingenting, och ska markeras `noexcept`.
+    * Ingen av dem ingår i `Interface`.
+    * `train()` i **L07** genomför en feedforward per träningsuppsättning och epok, så det är 
+      detta som gör träningsloopen möjlig att fastställa i ett test:
+        * Inget annat kan göra det: en loop som kör ett enda pass i stället för samtliga epoker 
+          stämmer fortfarande dimensionsmässigt och returnerar fortfarande `true`, så utan en 
+          räknare går den inte att skilja från en korrekt loop.
 
 För denna klass ska default-konstruktorn samt copy- och move-konstruktorerna (och tillhörande 
 operatorer) raderas.
 
-Lägg till lämpliga privata medlemsvariabler för att lagra antalet noder, antalet vikter per nod, 
-utdata, fel, bias samt vikter.
+Lägg till privata medlemsvariabler för utdatan, felet, vikterna samt feedforward-räknaren.
+
+Antalet noder och antalet vikter per nod behöver inga egna medlemsvariabler. Båda går att läsa ur 
+de vektorer ni redan har: `nodeCount()` är utdatavektorns storlek, och `weightCount()` är 
+viktmatrisens bredd.
+
+Bias behöver ingen alls. Den ingår inte i `Interface`, och denna stubb optimerar aldrig 
+någonting, så det skulle inte finnas något att lägga i den och inget sätt att läsa ut den igen.
+
+**OBS!** Att utelämna den är en förenkling som bara gäller stubben. Det skarpa `Dense`-lagret ni 
+skriver i **L08–L09** behöver en biasvektor: den är en träningsbar parameter som justeras 
+tillsammans med vikterna vid varje anrop till `optimize()`.
 
 ---
 

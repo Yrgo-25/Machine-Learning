@@ -23,6 +23,12 @@ Lägg till en privat medlemsvariabel döpt `myTrainOrder` i `Fixed`:
 * Ska innehålla indexen för träningsuppsättningarna som osignerade heltal (`ml::MatrixU32`).
 * Initieras i konstruktorn med indexen `0, 1, 2 ... N-1`, där `N` är antalet träningsuppsättningar.
 
+Medlemsvariabeln `mySetCount` från **L02** kan nu tas bort: `myTrainOrder` innehåller ett index per träningsuppsättning, så `myTrainOrder.size()` anger antalet träningsuppsättningar.
+
+Uppdatera konstruktorn i `source/ml/lin_reg/fixed.cpp`:
+* Skriv ut ett felmeddelande och anropa `std::terminate()` om antalet träningsuppsättningar är 0, precis som i **L02**.
+* Sätt storleken på `myTrainOrder` till antalet träningsuppsättningar och fyll den med indexen `0, 1, 2 ... N-1`.
+
 ---
 
 ### 4. Shuffling
@@ -37,7 +43,7 @@ Lägg till en privat metod döpt `shuffle()` i `Fixed`:
 Uppdatera metoden `train()` i `source/ml/lin_reg/fixed.cpp`:
 * Anropa `initRandom()` i början av metoden.
 * Anropa `shuffle(myTrainOrder)` i början av varje epok.
-* Iterera genom träningsuppsättningarna i den ordning som `myTrainOrder` anger i stället för sekventiellt via index.
+* Iterera genom träningsuppsättningarna i den ordning som `myTrainOrder` anger i stället för sekventiellt via index, exempelvis med en range-baserad for-loop över `myTrainOrder`. Observera att loopvariabeln nu är indexet in i träningsdatan, inte räknaren i sig.
 
 ---
 

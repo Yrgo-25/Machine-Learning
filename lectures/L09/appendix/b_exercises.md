@@ -62,7 +62,7 @@ Randomisera samtliga biasvärden och vikter:
 ### 3. Metoden `feedforward()`
 **Indatakontroll:**
 * Kontrollera att dimensionerna på given input matchar antalet vikter per nod i lagret (`input.size() == weightCount()`).
-* Om dimensionerna inte matchar: skriv ut felmeddelandet `"Input dimension mismatch: expected X, actual: Y!"` och anropa `std::terminate()` (från `<exception>`).
+* Om dimensionerna inte matchar: skriv ut felmeddelandet `"Input dimension mismatch: expected X, actual: Y!"` och returnera `false` utan att beräkna någonting.
 
 **Beräkning för varje nod:**
 * Iterera genom samtliga noder i lagret med en for-loop: `for (std::size_t i{}; i < nodeCount(); ++i)`.
@@ -73,7 +73,7 @@ Randomisera samtliga biasvärden och vikter:
   Detta värde behövs av `backpropagate()` nedan för att beräkna aktiveringsfunktionens derivata korrekt.
 * Applicera aktiveringsfunktionen på summan: `myOutput[i] = actFuncOutput(myActFunc, sum)`.
 
-**Returvärde:** Ingenting (`void`).
+**Returvärde:** `true` när samtliga noder har beräknats.
 
 ---
 
@@ -82,7 +82,7 @@ Implementera `backpropagate()` för utgångslager (med referensvärden):
 
 **Indatakontroll:**
 * Kontrollera att dimensionerna på referensvektorns storlek matchar antalet noder (`reference.size() == nodeCount()`).
-* Om dimensionerna inte matchar: skriv ut felmeddelandet `"Output dimension mismatch: expected X, actual: Y!"` och anropa `std::terminate()` (från `<exception>`).
+* Om dimensionerna inte matchar: skriv ut felmeddelandet `"Output dimension mismatch: expected X, actual: Y!"` och returnera `false` utan att beräkna någonting.
 
 **Felberäkning för varje nod:**
 * Iterera genom samtliga noder i lagret: `for (std::size_t i{}; i < nodeCount(); ++i)`.
@@ -94,7 +94,7 @@ Implementera `backpropagate()` för utgångslager (med referensvärden):
        aktiveringsfunktionens *indata*, inte dess utdata - annars blir derivatan felaktig för
        `ActFunc::Tanh` (fungerar av en slump för `ActFunc::Relu`).
 
-**Returvärde:** Ingenting (`void`).
+**Returvärde:** `true` när samtliga noders fel har beräknats.
 
 ---
 
@@ -103,7 +103,7 @@ Implementera `backpropagate()` för dolda lager (med fel och vikter från nästa
 
 **Indatakontroll:**
 * Kontrollera att nästa lagers viktantal matchar detta lagers nodantal (`nextLayer.weightCount() == nodeCount()`).
-* Om dimensionerna inte matchar: skriv ut felmeddelandet `"Layer dimension mismatch: expected X, actual: Y!"` och anropa `std::terminate()` (från `<exception>`).
+* Om dimensionerna inte matchar: skriv ut felmeddelandet `"Layer dimension mismatch: expected X, actual: Y!"` och returnera `false` utan att beräkna någonting.
 
 **Felberäkning för varje nod:**
 * Iterera genom samtliga noder i detta lager: `for (std::size_t i{}; i < nodeCount(); ++i)`.
@@ -115,16 +115,16 @@ Implementera `backpropagate()` för dolda lager (med fel och vikter från nästa
        (se OBS-rutan i föregående avsnitt om varför `myPreActivationOutput[i]` används i stället
        för `myOutput[i]`).
 
-**Returvärde:** Ingenting (`void`).
+**Returvärde:** `true` när samtliga noders fel har beräknats.
 
 ---
 
 ### 6. Metoden `optimize()`
 **Indatakontroll:**
-* Kontrollera att lärhastigheten är giltig (`learningRate > 0.0`).
-* Om lärhastigheten är ogiltig: skriv ut felmeddelandet `"Invalid learning rate X!"` och anropa `std::terminate()` (från `<exception>`).
+* Kontrollera att lärhastigheten ligger inom intervallet `(0.0, 1.0)`, samma intervall som stubben kontrollerade i **L06**.
+* Om lärhastigheten är ogiltig: skriv ut felmeddelandet `"Invalid learning rate X!"` och returnera `false` utan att uppdatera någonting.
 * Kontrollera att inputstorleken matchar antalet vikter per nod (`input.size() == weightCount()`).
-* Om dimensionerna inte matchar: skriv ut felmeddelandet `"Input dimension mismatch: expected X, actual: Y!"` och anropa `std::terminate()` (från `<exception>`).
+* Om dimensionerna inte matchar: skriv ut felmeddelandet `"Input dimension mismatch: expected X, actual: Y!"` och returnera `false` utan att uppdatera någonting.
 
 **Parameteruppdatering för varje nod:**
 * Iterera genom samtliga noder i lagret: `for (std::size_t i{}; i < nodeCount(); ++i)`.
@@ -133,6 +133,6 @@ Implementera `backpropagate()` för dolda lager (med fel och vikter från nästa
     2. Uppdatera alla vikter: `for (std::size_t j{}; j < weightCount(); ++j)`
         * `myWeights[i][j] += myError[i] * learningRate * input[j]`
 
-**Returvärde:** Ingenting (`void`).
+**Returvärde:** `true` när samtliga noders bias och vikter har uppdaterats.
 
 ---

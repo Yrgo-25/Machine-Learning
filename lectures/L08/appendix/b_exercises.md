@@ -129,6 +129,6 @@ if ((0U == nodeCount) || (0U == weightCount))
 * Följ beskrivningarna i `include/ml/dense_layer/interface.h`:
     * Metoder som `nodeCount()`, `weightCount()` ska returnera antalet noder respektive vikter per nod i lagret.
     * Getter-metoder såsom `output()` samt `error()` ska returnera referenser till motsvarande medlemsvariabler.
-    * De tre ej implementerade metoderna ska ha en tom funktionskropp (de returnerar ingenting, `void`).
+    * De tre ej implementerade metoderna returnerar `bool` (se **L06**), så en tom funktionskropp kompilerar inte. Ge var och en av dem en platshållarkropp bestående av `return false;` tills ni implementerar den under **L09**. `false` i stället för `true`, så att en metod ni glömmer att färdigställa rapporterar att den misslyckades i stället för att tyst påstå att allt gick bra.
 
 ---
